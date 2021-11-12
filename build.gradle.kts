@@ -18,7 +18,6 @@ repositories {
 
 dependencies {
     // Spring Dependencies
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
@@ -51,6 +50,11 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "11"
     }
+}
+
+// build.gradle
+tasks.getByName<Jar>("jar") {
+    enabled = false
 }
 
 tasks.withType<Test> {
