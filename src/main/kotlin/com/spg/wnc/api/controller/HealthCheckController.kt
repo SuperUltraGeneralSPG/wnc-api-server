@@ -6,17 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@Controller("/ping")
+@Controller("/api/ping")
 class HealthCheckController {
     @ApiOperation(value = "서버 헬스체크", notes = "서버 헬스체크 API")
-    @GetMapping("/pingping")
+    @GetMapping
     fun helloServer(): String {
-        return "SERVER HEALTH GOOD"
-    }
-
-    @ApiOperation(value = "서버 헬스체크2", notes = "서버 헬스체크 API2")
-    @GetMapping("/pong")
-    fun helloServer2(): String {
-        return "PONG"
+        return "SERVER HEALTH GOOD AND MY NAME IS DUDU"
     }
 }
