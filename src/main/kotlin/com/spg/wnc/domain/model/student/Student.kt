@@ -6,7 +6,13 @@ import javax.persistence.*
 @Entity
 data class Student(
     @Id @Column(name = "student_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
 
     val userId: Long
-)
+) {
+    companion object {
+        fun new(userId: Long) = Student(
+            userId = userId
+        )
+    }
+}

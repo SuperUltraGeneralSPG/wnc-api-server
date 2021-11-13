@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 data class Notification(
     @Id @Column(name = "notification_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
 
     val userId: Long,
 

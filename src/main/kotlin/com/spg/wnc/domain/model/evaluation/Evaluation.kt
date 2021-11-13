@@ -6,7 +6,9 @@ import javax.persistence.*
 @Entity
 data class Evaluation(
     @Id @Column(name = "evaluation_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
+
+    val userId: Long,
 
     val score: Int,
 

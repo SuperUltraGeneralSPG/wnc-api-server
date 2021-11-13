@@ -6,7 +6,9 @@ import com.spg.wnc.api.message.request.UserLoginRequest
 import com.spg.wnc.api.message.request.UserRegisterRequest
 import com.spg.wnc.api.message.response.UserLoginResponse
 import com.spg.wnc.api.message.response.UserRegisterResponse
+import com.spg.wnc.application.UserService
 import com.spg.wnc.domain.common.ResultResponseCode
+import com.spg.wnc.domain.model.user.User
 import com.spg.wnc.domain.model.user.UserType
 import com.spg.wnc.domain.model.user.UserRegisterMessage
 import io.swagger.annotations.ApiOperation
@@ -18,14 +20,18 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Controller("/api/v1/user")
-class UserController {
+class UserController(
+    private val userService: UserService
+) {
     @ApiOperation(value = "회원 가입", notes = "회원 가입 API")
     @PostMapping("/register")
     fun register(
         request: UserRegisterRequest
     ) : UserRegisterResponse {
-        // TODO: 내부구현
-        return UserRegisterResponse(true, UserRegisterMessage.REGISTER_SUCCESS.value)
+        return if (userService.register(request))
+            UserRegisterResponse(true, UserRegisterMessage.REGISTER_SUCCESS.value)
+        else
+            UserRegisterResponse(false, UserRegisterMessage.REGISTER_ERROR.value)
     }
 
     @ApiOperation(value = "회원 로그인", notes = "회원 로그인 API")
@@ -33,16 +39,28 @@ class UserController {
     fun login(
         request: UserLoginRequest
     ) : UserLoginResponse {
-        // TODO: 내부구현
-        return UserLoginResponse(1234556, UserType.STUDENT, 123123)
+        val user = userService.login(request)
+        return if (user != null) {
+            UserLoginResponse.from(user)
+        } else {
+            UserLoginResponse.fail()
+        }
+    }
+
+    @ApiOperation(value = "회원 정보 가져오기", notes = "회원 정보 가져오기 API")
+    @PostMapping("/getInfo")
+    fun getInfo(
+        userId: Long
+    ) : User {
+        return userService.getUser(userId)
     }
 
     @ApiOperation(value = "회원 아이디 중복검사", notes = "회원 아이디 중복검사 API")
     @PostMapping("/overlap")
     fun overlapCheck(
-        id: String
+        loginId: String
     ) : ResultResponseCode {
-        // TODO: 내부구현
+        userService.loginIdOverlapCheck(loginId)
         return ResultResponseCode.PASS
     }
 
@@ -51,8 +69,11 @@ class UserController {
     fun modifyUserInfo(
         request: UserInfoModifyRequest
     ) : ResultResponseCode {
-        // TODO: 내부구현
-        return ResultResponseCode.SUCCESS
+        return if (userService.modifyUserInfo(request)) {
+            ResultResponseCode.SUCCESS
+        } else {
+            ResultResponseCode.FAIL
+        }
     }
 
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 API")
@@ -60,7 +81,10 @@ class UserController {
     fun deregister(
         request: UserDeregisterRequest
     ) : ResultResponseCode {
-        // TODO: 내부구현
-        return ResultResponseCode.SUCCESS
+        return if (userService.deregister(request)) {
+            ResultResponseCode.SUCCESS
+        } else {
+            ResultResponseCode.FAIL
+        }
     }
 }

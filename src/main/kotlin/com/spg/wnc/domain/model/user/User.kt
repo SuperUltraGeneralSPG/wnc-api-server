@@ -7,13 +7,11 @@ import javax.persistence.*
 @Entity
 data class User(
     @Id @Column(name = "user_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
-    val typeId: Long,
+    val id: Long = 0L,
 
     val loginId: String,
 
-    val password: String,
+    var password: String,
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
@@ -21,5 +19,15 @@ data class User(
 
     val createdAt: LocalDateTime,
 
-    val updatedAt: LocalDateTime
-)
+    var updatedAt: LocalDateTime
+) {
+    companion object {
+        fun of(loginId: String, password: String, userType: UserType) = User(
+            loginId = loginId,
+            password = password,
+            userType = userType,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+    }
+}
