@@ -7,6 +7,7 @@ import com.spg.wnc.api.message.request.TutoringQuitRequest
 import com.spg.wnc.api.message.response.TutoringGenerationResponse
 import com.spg.wnc.domain.common.ResultResponseCode
 import com.spg.wnc.domain.model.tutoring.Tutoring
+import com.spg.wnc.domain.model.tutoring.TutoringStatus
 import com.spg.wnc.domain.model.tutoring.TutoringType
 import io.swagger.annotations.ApiOperation
 import org.springframework.stereotype.Controller
@@ -60,6 +61,12 @@ class TutoringController {
     fun inquiryTutoring(
         @PathVariable tutoringCode: Long
     ) : Tutoring {
-        return Tutoring(0, "title", "description", TutoringType.GROUP, 3, LocalDateTime.now())
+        return Tutoring(id = 0,
+            teacherId = 0,
+            "title",
+            "description",
+            status = TutoringStatus.CLOSED,
+            type = TutoringType.GROUP,
+            recruitNumber = 3, recruitEndDate = LocalDateTime.now())
     }
 }
