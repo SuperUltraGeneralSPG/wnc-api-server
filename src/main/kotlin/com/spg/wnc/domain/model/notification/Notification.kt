@@ -12,11 +12,11 @@ data class Notification(
 
     @Enumerated(EnumType.STRING)
     @Column(length = 200)
-    val message: NotificationMessage,
+    var message: NotificationMessage,
 
-    val isConfirmed: Boolean,
+    var isConfirmed: Boolean,
 
     val createdAt: LocalDateTime,
 
-    val updatedAt: LocalDateTime
+    var updatedAt: LocalDateTime
 )
