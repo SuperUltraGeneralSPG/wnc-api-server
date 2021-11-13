@@ -55,6 +55,7 @@ class UserService(
         userRepository.deleteById(request.userId)
         studentRepository.deleteByUserId(request.userId)
         teacherRepository.deleteByUserId(request.userId)
+        // TODO: Tutoring 제거
         return true
     }
 

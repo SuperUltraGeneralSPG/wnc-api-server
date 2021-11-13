@@ -5,6 +5,7 @@ import com.spg.wnc.api.message.request.TutoringGenerateRequest
 import com.spg.wnc.api.message.request.TutoringJoinRequest
 import com.spg.wnc.api.message.request.TutoringQuitRequest
 import com.spg.wnc.api.message.response.TutoringGenerationResponse
+import com.spg.wnc.application.TutoringService
 import com.spg.wnc.domain.common.ResultResponseCode
 import com.spg.wnc.domain.model.tutoring.Tutoring
 import com.spg.wnc.domain.model.tutoring.TutoringStatus
@@ -16,14 +17,16 @@ import java.time.LocalDateTime
 
 @RestController
 @Controller("/api/v1/tutoring")
-class TutoringController {
+class TutoringController(
+    private val tutoringService: TutoringService
+) {
     @ApiOperation(value = "과외 모집 생성", notes = "과외 생성 API (선생)")
     @PostMapping("/generation")
-    fun generateTutoring(
+    fun openTutoring(
         request: TutoringGenerateRequest
     ) : TutoringGenerationResponse {
-        // TODO
-        return TutoringGenerationResponse(12313)
+        val tutoringId = tutoringService.openTutoring(request)
+        return TutoringGenerationResponse(tutoringId)
     }
 
     @ApiOperation(value = "과외 모집 마감", notes = "과외 마감 API (선생)")
@@ -31,7 +34,11 @@ class TutoringController {
     fun closeTutoring(
       request: TutoringCloseRequest
     ) : ResultResponseCode {
-        return ResultResponseCode.SUCCESS
+        return if (tutoringService.closeTutoring(request)) {
+            ResultResponseCode.SUCCESS
+        } else {
+            ResultResponseCode.FAIL
+        }
     }
 
     @ApiOperation(value = "과외 등록 신청", notes = "과의 등록 신청 API (학생)")
@@ -39,7 +46,11 @@ class TutoringController {
     fun joinTutoring(
         request: TutoringJoinRequest
     ) : ResultResponseCode {
-        return ResultResponseCode.SUCCESS
+        return if (tutoringService.joinTutoring(request)) {
+            ResultResponseCode.SUCCESS
+        } else {
+            ResultResponseCode.FAIL
+        }
     }
 
     @ApiOperation(value = "과외 해지", notes = "과외 탈퇴 API (학생)")
@@ -47,26 +58,24 @@ class TutoringController {
     fun quitTutoring(
         request: TutoringQuitRequest
     ) : ResultResponseCode {
-        return ResultResponseCode.SUCCESS
+        return if (tutoringService.quitTutoring(request)) {
+            ResultResponseCode.SUCCESS
+        } else {
+            ResultResponseCode.FAIL
+        }
     }
 
     @ApiOperation(value = "과외 전체 목록 불러오기", notes = "과외 전체 목록 불러오기 API")
     @GetMapping("/list")
     fun inquiryTutoringList() : List<Tutoring> {
-        return listOf()
+        return tutoringService.inquiryTutoringList()
     }
 
     @ApiOperation(value = "과외 상세 불러오기", notes = "과외 상세 불러오기 API")
-    @GetMapping("/inquiry/{tutoringCode}")
+    @GetMapping("/inquiry/{tutoringId}")
     fun inquiryTutoring(
-        @PathVariable tutoringCode: Long
+        @PathVariable tutoringId: Long
     ) : Tutoring {
-        return Tutoring(id = 0,
-            teacherId = 0,
-            "title",
-            "description",
-            status = TutoringStatus.CLOSED,
-            type = TutoringType.GROUP,
-            recruitNumber = 3, recruitEndDate = LocalDateTime.now())
+        return tutoringService.inquiryTutoringDetail(tutoringId)
     }
 }
