@@ -10,8 +10,6 @@ interface TutoringRepository : JpaRepository<Tutoring, Long> {
 
     fun findByTeacherIdAndStatus(teacherId: Long, status: TutoringStatus): List<Tutoring>
 
-    fun findByStatus
-
     @Query(
         value = """
          UPDATE Tutoring t 
