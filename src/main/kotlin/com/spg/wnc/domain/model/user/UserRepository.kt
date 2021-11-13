@@ -1,4 +1,5 @@
 package com.spg.wnc.domain.model.user
 
-interface UserRepository {
-}
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface UserRepository : JpaRepository<User, Long>
