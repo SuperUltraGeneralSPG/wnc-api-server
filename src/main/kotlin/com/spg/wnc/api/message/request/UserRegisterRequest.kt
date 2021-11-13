@@ -5,6 +5,6 @@ import com.spg.wnc.domain.model.user.UserType
 data class UserRegisterRequest(
     val id: String,
     val password: String,
-    val memberType: UserType,
+    val userType: UserType,
     val career: List<String>?
 )
