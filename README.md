@@ -8,6 +8,6 @@
 - Language : Kotlin
 - JavaVersion : Java11
 - Framework : Springboot 2.5.6
-- Database : MySQL
+- Database : MySQL Community
 - TestUnit : Junit
 - Deployment : Docker
