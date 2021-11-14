@@ -14,3 +14,6 @@
 
 ## Architecture Diagram
 ![image](https://user-images.githubusercontent.com/55086076/141689714-5bcb0ae4-0ad7-4730-aae2-04a118ff8cd3.png)
+
+## Deployment
+![image](https://user-images.githubusercontent.com/55086076/141690266-cfcdb3a3-6db8-4c12-a754-46b80954f693.png)
