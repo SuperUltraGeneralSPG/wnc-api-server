@@ -60,8 +60,11 @@ class UserController(
     fun overlapCheck(
         loginId: String
     ) : ResultResponseCode {
-        userService.loginIdOverlapCheck(loginId)
-        return ResultResponseCode.PASS
+        return if (userService.loginIdOverlapCheck(loginId)) {
+            ResultResponseCode.FAIL
+        } else {
+            ResultResponseCode.SUCCESS
+        }
     }
 
     @ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정 API")

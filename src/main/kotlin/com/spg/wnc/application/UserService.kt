@@ -14,6 +14,7 @@ import com.spg.wnc.domain.model.tutoring.TutoringRepository
 import com.spg.wnc.domain.model.user.User
 import com.spg.wnc.domain.model.user.UserRepository
 import com.spg.wnc.domain.model.user.UserType
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.lang.Exception
 import kotlin.math.log
@@ -26,6 +27,8 @@ class UserService(
     private val tutoringRepository: TutoringRepository,
     private val notificationRepository: NotificationRepository
 ) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     fun register(request: UserRegisterRequest): Boolean {
         with(request) {
             val user = User.of(id,password,userType)
@@ -76,7 +79,8 @@ class UserService(
     }
 
     fun loginIdOverlapCheck(loginId: String): Boolean {
-        return userRepository.findByLoginId(loginId) == null
+        logger.info(userRepository.findByLoginId(loginId).toString())
+        return userRepository.findByLoginId(loginId) != null
     }
 
     private fun getUserByLoginId(loginId: String): User {
