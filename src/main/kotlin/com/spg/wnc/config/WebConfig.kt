@@ -1,6 +1,7 @@
 package com.spg.wnc.config
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -18,5 +19,11 @@ class WebConfig : WebMvcConfigurer {
         registry.addViewController("/swagger-ui/")
             .setViewName("forward:/swagger-ui/index.html")
         super.addViewControllers(registry)
+    }
+
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+            .allowedOrigins("/*")
+        super.addCorsMappings(registry)
     }
 }

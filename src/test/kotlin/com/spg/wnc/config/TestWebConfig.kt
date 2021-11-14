@@ -9,8 +9,4 @@ import org.springframework.context.annotation.Import
 @TestConfiguration
 @Import(value = [WebConfig::class, SerializationConfig::class])
 class TestWebConfig {
-    @Bean
-    fun jsonMapper(): JsonMapper {
-        return mock()
-    }
 }
