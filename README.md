@@ -1,4 +1,4 @@
-# SPG 팀의 WNC API SERVER
+# SPG 팀 WNC API SERVER
 - Cloud Flatform : AWS
 - Server Address : 44.195.135.43
 - DB Address : 52.23.51.183
