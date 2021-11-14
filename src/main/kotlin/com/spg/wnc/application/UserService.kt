@@ -4,7 +4,9 @@ import com.spg.wnc.api.message.request.UserDeregisterRequest
 import com.spg.wnc.api.message.request.UserInfoModifyRequest
 import com.spg.wnc.api.message.request.UserLoginRequest
 import com.spg.wnc.api.message.request.UserRegisterRequest
+import com.spg.wnc.domain.common.ErrorCode
 import com.spg.wnc.domain.common.ResultResponseCode
+import com.spg.wnc.domain.common.SpgException
 import com.spg.wnc.domain.model.notification.NotificationRepository
 import com.spg.wnc.domain.model.student.Student
 import com.spg.wnc.domain.model.student.StudentRepository
@@ -51,7 +53,11 @@ class UserService(
     }
 
     fun login(request: UserLoginRequest): User? {
-        return getUserByLoginId(request.loginId)
+        val user = getUserByLoginId(request.loginId)
+        if (request.password != user.password) {
+            throw SpgException(ErrorCode.PASSWORD_WRONG)
+        }
+        return user
     }
 
     fun deregister(request: UserDeregisterRequest): Boolean {
@@ -84,6 +90,7 @@ class UserService(
     }
 
     private fun getUserByLoginId(loginId: String): User {
-        return userRepository.findByLoginId(loginId) ?: throw Exception()
+        return userRepository.findByLoginId(loginId)
+            ?: throw SpgException(ErrorCode.UNIDENTIFIED_LOGIN_ID)
     }
 }
