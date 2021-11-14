@@ -45,7 +45,7 @@ data class Tutoring (
             status = TutoringStatus.RECRUITING,
             studentList = mutableListOf(),
             recruitNumber = tutoringGenerateRequest.recruitNumber,
-            recruitEndDate = tutoringGenerateRequest.recruitEndDate,
+            recruitEndDate = LocalDateTime.now().plusDays(tutoringGenerateRequest.recruitEndDate),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
