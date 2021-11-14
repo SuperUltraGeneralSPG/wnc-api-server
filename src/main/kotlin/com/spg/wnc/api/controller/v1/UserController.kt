@@ -4,6 +4,7 @@ import com.spg.wnc.api.message.request.UserDeregisterRequest
 import com.spg.wnc.api.message.request.UserInfoModifyRequest
 import com.spg.wnc.api.message.request.UserLoginRequest
 import com.spg.wnc.api.message.request.UserRegisterRequest
+import com.spg.wnc.api.message.response.UserInfoResponse
 import com.spg.wnc.api.message.response.UserLoginResponse
 import com.spg.wnc.api.message.response.UserRegisterResponse
 import com.spg.wnc.application.UserService
@@ -51,8 +52,8 @@ class UserController(
     @PostMapping("/getInfo")
     fun getInfo(
         userId: Long
-    ) : User {
-        return userService.getUser(userId)
+    ) : UserInfoResponse {
+        return userService.getUserInfo(userId)
     }
 
     @ApiOperation(value = "회원 아이디 중복검사", notes = "회원 아이디 중복검사 API")

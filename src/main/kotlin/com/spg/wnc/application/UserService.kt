@@ -4,6 +4,7 @@ import com.spg.wnc.api.message.request.UserDeregisterRequest
 import com.spg.wnc.api.message.request.UserInfoModifyRequest
 import com.spg.wnc.api.message.request.UserLoginRequest
 import com.spg.wnc.api.message.request.UserRegisterRequest
+import com.spg.wnc.api.message.response.UserInfoResponse
 import com.spg.wnc.domain.common.ErrorCode
 import com.spg.wnc.domain.common.ResultResponseCode
 import com.spg.wnc.domain.common.SpgException
@@ -80,8 +81,14 @@ class UserService(
         return true
     }
 
-    fun getUser(userId: Long): User {
-        return userRepository.getById(userId)
+    fun getUserInfo(userId: Long): UserInfoResponse {
+        val user = userRepository.getById(userId)
+        val career = if (user.userType == UserType.TEACHER) {
+            teacherRepository.findByUserId(user.id).career
+        } else {
+            null
+        }
+        return UserInfoResponse.from(user, career)
     }
 
     fun loginIdOverlapCheck(loginId: String): Boolean {
