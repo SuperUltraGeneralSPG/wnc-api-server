@@ -9,5 +9,5 @@ data class TutoringGenerateRequest(
     val description: String,
     val type: TutoringType,
     val recruitNumber: Int,
-    val recruitEndDate: LocalDateTime
+    val recruitEndDate: Long
 )
