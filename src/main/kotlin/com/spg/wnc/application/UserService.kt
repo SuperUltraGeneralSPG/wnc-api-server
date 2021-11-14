@@ -34,7 +34,7 @@ class UserService(
 
     fun register(request: UserRegisterRequest): Boolean {
         with(request) {
-            val user = User.of(id,password,userType)
+            val user = User.from(request)
             userRepository.saveAndFlush(user)
 
             when(userType) {
