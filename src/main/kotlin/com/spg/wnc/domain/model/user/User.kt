@@ -1,14 +1,33 @@
 package com.spg.wnc.domain.model.user
 
+import com.spg.wnc.infra.persistence.StringListConverter
 import java.time.LocalDateTime
+import javax.persistence.*
 
+@Entity
 data class User(
-    val id: Long,
-    val typeId: Long,
+    @Id @Column(name = "user_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0L,
+
     val loginId: String,
-    val password: String,
+
+    var password: String,
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
     val userType: UserType,
-    val career: List<String>,
+
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
-)
+
+    var updatedAt: LocalDateTime
+) {
+    companion object {
+        fun of(loginId: String, password: String, userType: UserType) = User(
+            loginId = loginId,
+            password = password,
+            userType = userType,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+    }
+}
