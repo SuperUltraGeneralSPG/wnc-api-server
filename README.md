@@ -2,7 +2,7 @@
 - Cloud Flatform : AWS
 - Server Address : 44.195.135.43
 - DB Address : 52.23.51.183
-- FE Address : 44.196.193.226
+- FE Page : http://44.196.193.226
 - Swagger API Docs : http://44.195.135.43/swagger-ui/index.html#/
 
 ## Tech Stack
