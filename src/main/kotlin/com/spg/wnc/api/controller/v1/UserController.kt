@@ -40,6 +40,7 @@ class UserController(
     fun login(
         request: UserLoginRequest
     ) : UserLoginResponse {
+
         val user = userService.login(request)
         return if (user != null) {
             UserLoginResponse.from(user)
